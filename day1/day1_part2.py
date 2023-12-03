@@ -26,41 +26,91 @@ digits ={1:"one",
          9:"nine"}
 
 
+
+
 puzzle = open("input2_day1.txt","r")
 
 puzzle_input = puzzle.readlines()
 puzzle.close()
 
-for i in digits:
-    if (digits[i] in puzzle_input[0]):
-        print("hey")
-    pass
 
 sum = 0
-i = 0
+j = 0
 
 for line in puzzle_input:
-    i=i+1
+    j=j+1
     num1 = None
     num2 = None
 
+    first_num_int = {
+    "value": None,
+    "index": None
+
+    }
+
+    first_num_word = {
+    "value": None,
+    "index": None
+
+    }
+
+    second_num_word = {
+    "value": None,
+    "index": None
+    }
+
+    second_num_int = {
+    "value": None,
+    "index": None
+
+    }
+
+    for i in digits:
+        if (digits[i] in line):
+
+            temp_index_left = line.find(digits[i])
+            temp_index_right = line.rfind(digits[i])
+            
+            if ((first_num_word["index"] == None) or (first_num_word["index"] > temp_index_left)):
+                first_num_word["value"] = i
+                first_num_word["index"] = line.find(digits[i])
+                num1 = i
+            
+            if ((second_num_word["index"] == None) or (second_num_word["index"] < temp_index_right) ):
+                second_num_word["value"] = i
+                second_num_word["index"] = line.rfind(digits[i])
+                num2 = i
+
     for letter in range(len(line)):
 
-        if(num1 == None):
+        if(first_num_int["index"] == None):
             if(line[letter].isnumeric()):
-                num1 = line[letter]
+                first_num_int["value"] = line[letter]
+                first_num_int["index"] = line.find(line[letter])
 
-        if(num2 == None):
+                if ((first_num_word["index"] == None)) :
+                    num1 = first_num_int["value"]
+
+                elif (first_num_int["index"] < first_num_word["index"]):
+                    num1 = first_num_int["value"]
+                    
+
+
+        if(second_num_int["index"] == None):
             if(line[-1-letter].isnumeric()):
-                num2 = line[-1-letter]
+                second_num_int["value"] = line[-1-letter]
+                second_num_int["index"] = line.rfind(line[-1-letter])
+                
+                if (second_num_word["index"] == None):
+                    num2 = second_num_int["value"]
+
+                elif(second_num_int["index"] > second_num_word["index"]):
+                    num2 = second_num_int["value"]
+
         
-        if(num1!=None and num2!=None):
-            print("{}:{}{}".format(i,num1,num2))
-            sum = sum + (int("{}{}".format(num1,num2)))
-            break
+    if(num1!=None and num2!=None):
+        print("{}:{}{}".format(j,num1,num2))
+        sum = sum + (int("{}{}".format(num1,num2)))
 
+    
 print(sum)
-
-
-sum = 0
-i = 0
