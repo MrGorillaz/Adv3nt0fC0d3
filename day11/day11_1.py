@@ -64,8 +64,8 @@ def get_galaxy_positions(universe):
 
         galaxy_pos.append([galaxies[0][galaxy],galaxies[1][galaxy]])
         
-        if ([galaxies[1][galaxy],galaxies[0][galaxy]] in galaxy_pos):
-            galaxy_pos.remove([galaxies[1][galaxy],galaxies[0][galaxy]])
+        #if ([galaxies[1][galaxy],galaxies[0][galaxy]] in galaxy_pos):
+        #    galaxy_pos.remove([galaxies[1][galaxy],galaxies[0][galaxy]])
         
 
     return galaxy_pos
@@ -83,8 +83,13 @@ def get_galaxy_positions_distances(galaxy_pos):
 
         for i in range(len(galaxy_pos)):
 
+            #for g in galaxy_pairs:
+
+            #   if [g[1],g[0]] in galaxy_pairs:
+            #        galaxy_pairs.remove([g[1],g[0]])
+
             galaxy_pair = [pos,galaxy_pos[i]]
-            galaxy_pair.sort(key=lambda x: x[0])
+           #galaxy_pair.sort(key=lambda x: x[0])
             if galaxy_pair not in galaxy_pairs:
                 if ((galaxy_pair[0][0] != galaxy_pair[1][0]) and (galaxy_pair[0][1] != galaxy_pair[1][1])):
                     galaxy_pairs.append(galaxy_pair)
@@ -94,16 +99,17 @@ def get_galaxy_positions_distances(galaxy_pos):
                     galaxy_pairs.append(galaxy_pair)
                 else:
                     print(galaxy_pair)
-        
-        for g in galaxy_pairs:
-
+    
+    print("remove double pairs")
+    for g in galaxy_pairs:
+            print("remove double pairs")
             if [g[1],g[0]] in galaxy_pairs:
                 galaxy_pairs.remove([g[1],g[0]])
 
    
-
+    print("calculate")
     for pos in galaxy_pairs:
-
+        
         distance = abs(pos[0][0] - pos[1][0]) + abs(pos[0][1]-pos[1][1])
         #if distance == 5:
         #    print(pos)
