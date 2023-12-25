@@ -9,19 +9,25 @@ for line in range(len(words)):
 
 steps = words[0].split(',')
 
+def hash (step):
+    
+        current_value = 0
+
+        for i in range(len(step)):
+
+            val = ord(step[i])
+            current_value = current_value + val
+            current_value = int((current_value * 17) % 256)
+        
+        return current_value 
+
 all_sum = 0
 
 #steps = ['HASH']
 
 for step in steps:
     
-    current_value = 0
-    
-    for i in range(len(step)):
-
-        val = ord(step[i])
-        current_value = current_value + val
-        current_value = int((current_value * 17) % 256)
+    current_value = hash(step)
     all_sum = all_sum + current_value
 
 print(all_sum)
